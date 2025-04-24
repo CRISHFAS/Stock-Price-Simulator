@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-Time Stock Price Monitor</title>
+    <script>
+      let socket;
+
+      function connectToTicker() {
+        const ticker = document.getElementById('ticker').value;
+
+        // Close existing socket if open
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.close();
+        }
+
+        // Create a new WebSocket connection with the selected ticker
+        socket = new WebSocket("<%= url_for('stock_updates')->to_abs %>?ticker=" + ticker);
+
+        // Handle incoming messages
+        socket.onmessage = function(event) {
+          const data = JSON.parse(event.data);
+          document.getElementById('price').innerText = data.price;
+          document.getElementById('ticker-display').innerText = data.ticker;
+        };
+
+        socket.onopen = function() {
+          console.log('WebSocket connection opened for', ticker);
+        };
+
+        socket.onclose = function() {
+          console.log('WebSocket connection closed');
+        };
+
+        socket.onerror = function(error) {
+          console.error('WebSocket error:', error);
+        };
+      }
+
+      window.onload = function() {
+        connectToTicker();
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Real-Time Stock Price Monitor</h1>
+    <p>Select a stock ticker:</p>
+    <select id="ticker" onchange="connectToTicker()">
+      <option value="APPL">APPL</option>
+      <option value="GOOGLE">GOOGLE</option>
+      <option value="AMZN">AMZN</option>
+      <option value="MSFT">MSFT</option>
+    </select>
+    <p>Current Price for <span id="ticker-display">APPL</span>: $<span id="price">-</span></p>
+  </body>
+</html>
