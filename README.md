@@ -14,12 +14,11 @@ Para instalarlo con CPAN, ejecuta el comando:
 ```bash
 cpan Mojolicious
 ```
-<br>
 
 #### ¿Qué son los WebSockets?
 Los WebSockets son una tecnología que permite un canal de comunicación bidireccional y en tiempo real entre un cliente (como un navegador) y un servidor. A diferencia del modelo clásico de solicitudes HTTP, los WebSockets mantienen una conexión persistente, lo que permite enviar datos sin necesidad de realizar solicitudes continuas.
 
-#### Beneficios de los WebSockets:
+### Beneficios de los WebSockets:
 
 - **Actualizaciones instantáneas**: El servidor puede enviar datos en cuanto estén disponibles.
 
@@ -37,14 +36,13 @@ Los WebSockets son una tecnología que permite un canal de comunicación bidirec
 
 - **Cierre de conexión**: La conexión se mantiene hasta que el cliente o servidor deciden cerrarla. Este comportamiento es ideal para aplicaciones en tiempo real.
 
-#### Configuración del Proyecto
+### Configuración del Proyecto
 
 Generaremos nuestra aplicación Mojolicious con el comando:
 
 ```bash
 mojo generate app StockMonitor
 ```
-<br>
 
 Esto generará una estructura de directorios básica para la aplicación. Por ejemplo:
 
@@ -62,7 +60,6 @@ StockMonitor/
 ├── public/
 └── t/
 ```
-<br>
 
 **Limpieza inicial**:
 Podemos eliminar archivos innecesarios para nuestro proyecto:
@@ -71,7 +68,6 @@ Podemos eliminar archivos innecesarios para nuestro proyecto:
 rm -f lib/StockMonitor/Controller/Example.pm
 rm -rf templates/example/
 ```
-<br>
 
 Después, tu estructura debería lucir así:
 
@@ -89,7 +85,6 @@ StockMonitor/
 │       └── index.html.ep
 └── public/
 ```
-<br>
 
 #### Configurando la Aplicación
 
@@ -113,7 +108,6 @@ sub startup ($self) {
 
 1;
 ```
-<br>
 
 Ruta `/stock_updates`: Maneja las conexiones WebSocket.
 
@@ -152,7 +146,6 @@ sub updates {
 
 1;
 ```
-<br>
 
 El Front-End `(templates/stock/index.html.ep)`:
 Esta es la interfaz del usuario con actualizaciones en tiempo real:
@@ -201,7 +194,6 @@ Esta es la interfaz del usuario con actualizaciones en tiempo real:
   </body>
 </html>
 ```
-<br>
 
 #### Ejecutando la Aplicación
 **Ejecuta el servidor con Morbo**:
@@ -209,15 +201,7 @@ Esta es la interfaz del usuario con actualizaciones en tiempo real:
 ```bash
 morbo script/stock_monitor
 ```
-<br>
 
 Abre `http://127.0.0.1:3000` en tu navegador para interactuar con la aplicación.
 
 ![](https://tiagomelo.info/assets/images/2024-09-05-perl-mojolicious-ws-server/stockMonitor.gif)
-
-### conclusión
-
-Este proyecto demuestra cómo crear un monitor de precios de acciones en tiempo real utilizando [Mojolicious](https://www.mojolicious.org/), aprovechando [WebSockets](https://en.wikipedia.org/wiki/WebSocket) para actualizaciones de datos instantáneas. Aunque en este ejemplo se utilizan datos simulados, se pueden aplicar los mismos principios para crear una aplicación más compleja y realista. Con la sintaxis sencilla y las potentes funciones de Mojolicious, la creación de aplicaciones web en tiempo real en [Perl](https://www.perl.org/) se convierte en una experiencia agradable.
-
-Descargar el código fuente
-[Aquí](https://github.com/CRISHFAS/Stock-Price-Simulator)
